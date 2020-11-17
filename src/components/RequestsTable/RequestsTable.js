@@ -34,7 +34,7 @@ const RequestsTable = () => {
 
   return (
     <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
+      <Table className={classes.table} aria-label="Список заявок на перевозки">
         <TableHead>
           <TableRow>
             <TableCell>№</TableCell>
