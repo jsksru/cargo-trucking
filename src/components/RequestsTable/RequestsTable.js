@@ -6,6 +6,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import IconButton from '@material-ui/core/IconButton';
+
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles({
   table: {
@@ -51,7 +56,15 @@ const RequestsTable = () => {
               <TableCell align="left">{row.carrierPhone}</TableCell>
               <TableCell align="left">{row.code}</TableCell>
               <TableCell align="right">
-                edit | delete
+                <IconButton aria-label="View">
+                  <VisibilityIcon />
+                </IconButton>
+                <IconButton aria-label="Edit" color="primary">
+                  <EditIcon />
+                </IconButton>
+                <IconButton aria-label="Delete" color="secondary">
+                  <DeleteIcon />
+                </IconButton>
               </TableCell>
             </TableRow>
           ))}
