@@ -1,45 +1,30 @@
-import { Container, AppBar, Toolbar, IconButton, Typography, Button } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
-
+import { Container } from '@material-ui/core';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import AppHeader from './components/AppHeader';
 import Main from './layouts/Main';
 import Request from './layouts/Request';
 import NewRequest from './layouts/NewRequest';
 
-function App() {
-  const classes = useStyles();
-
+function App() {  
   return (
-    <Container>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>Грузоперевозки</Typography>
-          <Button color="inherit">Выйти</Button>
-        </Toolbar>
-      </AppBar>
-      <h1>App</h1>
-      <Main />
-      <Request />
-      <NewRequest />
-    </Container>
+    <Router>
+      <Container>
+        <AppHeader />
+        <Switch>
+          <Route exact path="/">
+            <Main />
+          </Route>
+          <Route path="/edit/:id">
+            <Request />
+          </Route>
+          <Route path="/new">
+            <NewRequest />
+          </Route>
+        </Switch>
+      </Container>
+    </Router>
   );
 }
 
 export default App;
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    title: {
-      flexGrow: 1,
-    },
-  }),
-);
