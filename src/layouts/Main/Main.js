@@ -3,6 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
+import { Link } from 'react-router-dom';
 
 const Main = () => {
   return (
@@ -13,6 +14,8 @@ const Main = () => {
         </Grid>
         <Grid item>
         <Button
+          component={Link}
+          to="/new"
           variant="contained"
           color="primary"
           size="large"
