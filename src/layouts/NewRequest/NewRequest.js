@@ -23,7 +23,7 @@ const NewRequest = () => {
     <>
     <Grid container spacing={3} direction="column">
       <Grid item>
-      <Button component={Link} to="/" variant="contained" size="small" startIcon={<KeyboardReturnIcon />}>Назад к списку заявок</Button>
+      <Button component={Link} to="/" variant="outlined" size="small" startIcon={<KeyboardReturnIcon />}>Назад к списку заявок</Button>
       </Grid>
       <Grid item>
         <Typography variant="h4" component="h1">Новая заявка</Typography>
