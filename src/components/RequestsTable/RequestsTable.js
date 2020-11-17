@@ -10,7 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteButton from '../DeleteButton';
 
 const useStyles = makeStyles({
   table: {
@@ -33,44 +33,44 @@ const RequestsTable = () => {
   const classes = useStyles();
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="Список заявок на перевозки">
-        <TableHead>
-          <TableRow>
-            <TableCell>№</TableCell>
-            <TableCell align="left">Дата/Время</TableCell>
-            <TableCell align="left">Клиент</TableCell>
-            <TableCell align="left">Перевозчик</TableCell>
-            <TableCell align="left">Телефон перевозчика</TableCell>
-            <TableCell align="left">АТИ</TableCell>
-            <TableCell align="right">Действия</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell component="th" scope="row">{row.number}</TableCell>
-              <TableCell align="left">{row.datetime}</TableCell>
-              <TableCell align="left">{row.client}</TableCell>
-              <TableCell align="left">{row.carrier}</TableCell>
-              <TableCell align="left">{row.carrierPhone}</TableCell>
-              <TableCell align="left">{row.code}</TableCell>
-              <TableCell align="right">
-                <IconButton aria-label="View">
-                  <VisibilityIcon />
-                </IconButton>
-                <IconButton aria-label="Edit" color="primary">
-                  <EditIcon />
-                </IconButton>
-                <IconButton aria-label="Delete" color="secondary">
-                  <DeleteIcon />
-                </IconButton>
-              </TableCell>
+    <>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="Список заявок на перевозки">
+          <TableHead>
+            <TableRow>
+              <TableCell>№</TableCell>
+              <TableCell align="left">Дата/Время</TableCell>
+              <TableCell align="left">Клиент</TableCell>
+              <TableCell align="left">Перевозчик</TableCell>
+              <TableCell align="left">Телефон перевозчика</TableCell>
+              <TableCell align="left">АТИ</TableCell>
+              <TableCell align="right">Действия</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow key={row.id}>
+                <TableCell component="th" scope="row">{row.number}</TableCell>
+                <TableCell align="left">{row.datetime}</TableCell>
+                <TableCell align="left">{row.client}</TableCell>
+                <TableCell align="left">{row.carrier}</TableCell>
+                <TableCell align="left">{row.carrierPhone}</TableCell>
+                <TableCell align="left">{row.code}</TableCell>
+                <TableCell align="right">
+                  <IconButton aria-label="View">
+                    <VisibilityIcon />
+                  </IconButton>
+                  <IconButton aria-label="Edit" color="primary">
+                    <EditIcon />
+                  </IconButton>
+                  <DeleteButton id={row.id}/>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 };
 
