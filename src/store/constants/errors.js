@@ -1,0 +1,3 @@
+export const ERROR_ENABLE = 'ERROR_ENABLE';
+export const ERROR_DISABLE = 'ERROR_DISABLE';
+export const CHANGE_ERROR_TEXT = 'CHANGE_ERROR_TEXT';
