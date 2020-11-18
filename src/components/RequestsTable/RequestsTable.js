@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,10 +8,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
-
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteButton from '../DeleteButton';
+import Loader from '../Loader';
+import * as requestsApi from '../../api/requests';
 
 const useStyles = makeStyles({
   table: {
@@ -18,22 +20,48 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(id, number, datetime, client, carrier, carrierPhone, code) {
-  return { id, number, datetime, client, carrier, carrierPhone, code };
-}
-
-const rows = [
-  createData(101, 'A01', '03.02.2020 11:32', 'ООО "Альфа"', 'Алексеев В.Е.', '+7(900)12-34-567', '174899'),
-  createData(232, 'A02', '12.11.2020 12:32', 'ЗАО "Сатурн"', 'Алексеев В.Е.', '+7(900)12-34-567', '174899'),
-  createData(343, 'T19', '11.05.2020 5:00', 'ИП Иванов И.И.', 'Алексеев В.Е.', '+7(900)12-34-567', '174899'),
-  createData(104, 'Ю77', '28.10.2020 9:05', 'STERN', 'Алексеев В.Е.', '+7(900)12-34-567', '174899'),
-];
-
 const RequestsTable = () => {
   const classes = useStyles();
+  const [ loading, setLoading ] = useState(false);
+  const [ requests, setRequests ] = useState([]);
 
-  return (
-    <>
+  useEffect(() => {
+    setLoading(true);
+    requestsApi.getAll()
+    .then(data => {
+      if (data && data.length && data.length >= 1) {
+        setRequests(data);
+      }
+      setLoading(false);
+    })
+    .catch(err => {
+      setLoading(false);
+      console.log(err);
+    });
+  }, []);
+
+  const MyTable = () => {
+    const rows = requests.map((row) => (
+      <TableRow key={row.id}>
+        <TableCell component="th" scope="row">{row.number}</TableCell>
+        <TableCell align="left">{row.datetime}</TableCell>
+        <TableCell align="left">{row.client}</TableCell>
+        <TableCell align="left">{row.carrier}</TableCell>
+        <TableCell align="left">{row.carrierPhone}</TableCell>
+        <TableCell align="left">{row.code}</TableCell>
+        <TableCell align="right">
+          <IconButton aria-label="View">
+            <VisibilityIcon />
+          </IconButton>
+          <IconButton aria-label="Edit" color="primary">
+            <EditIcon />
+          </IconButton>
+          <DeleteButton id={row.id}/>
+        </TableCell>
+      </TableRow>
+    ));
+
+    return(
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="Список заявок на перевозки">
           <TableHead>
@@ -48,30 +76,14 @@ const RequestsTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.id}>
-                <TableCell component="th" scope="row">{row.number}</TableCell>
-                <TableCell align="left">{row.datetime}</TableCell>
-                <TableCell align="left">{row.client}</TableCell>
-                <TableCell align="left">{row.carrier}</TableCell>
-                <TableCell align="left">{row.carrierPhone}</TableCell>
-                <TableCell align="left">{row.code}</TableCell>
-                <TableCell align="right">
-                  <IconButton aria-label="View">
-                    <VisibilityIcon />
-                  </IconButton>
-                  <IconButton aria-label="Edit" color="primary">
-                    <EditIcon />
-                  </IconButton>
-                  <DeleteButton id={row.id}/>
-                </TableCell>
-              </TableRow>
-            ))}
+            {rows}
           </TableBody>
         </Table>
       </TableContainer>
-    </>
-  );
+    );
+  };
+
+  return loading ? <Loader /> : <MyTable/>;
 };
 
 export default RequestsTable;
