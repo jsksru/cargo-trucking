@@ -13,7 +13,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteButton from '../DeleteButton';
 import Loader from '../Loader';
-import { loadRequests } from '../../store/actions/requests';
+import { loadRequestsTrigger } from '../../store/actions/requests';
 
 const useStyles = makeStyles({
   table: {
@@ -28,7 +28,7 @@ const RequestsTable = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadRequests());
+    dispatch(loadRequestsTrigger());
   }, []);
 
   const MyTable = () => {
