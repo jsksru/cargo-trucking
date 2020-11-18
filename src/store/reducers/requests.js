@@ -1,26 +1,29 @@
-import { LOAD_REQUESTS, REQUEST_LOADING, PUT_REQUESTS_DATA } from '../constants/requests';
+import { UPDATE_REQUESTS, CHANGE_LOADING_STATUS, CHANGE_SAVING_STATUS } from '../constants/requests';
 
 const defaultState = {
   requests: [],
   isLoading: false,
+  isSaving: false,
 };
 
 const reducer = (state = defaultState, action) => {
   switch (action.type) {
-    case LOAD_REQUESTS:
-      return state;
-    case PUT_REQUESTS_DATA:
+    case UPDATE_REQUESTS:
       return {
         ...state,
         requests: [
           ...action.data
         ]
       };
-    case REQUEST_LOADING:
-      console.log(action);
+    case CHANGE_LOADING_STATUS:
       return {
         ...state,
         isLoading: action.status
+      };
+    case CHANGE_SAVING_STATUS:
+      return {
+        ...state,
+        isSaving: action.status
       };
     default:
       return state;
