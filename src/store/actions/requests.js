@@ -1,15 +1,26 @@
-import { LOAD_REQUESTS, REQUEST_LOADING, PUT_REQUESTS_DATA } from '../constants/requests';
+import { LOAD_REQUESTS_TRIGGER, UPDATE_REQUESTS, CHANGE_LOADING_STATUS, CHANGE_SAVING_STATUS, NEW_REQUEST } from '../constants/requests';
 
-export const loadRequests = () => ({
-  type: LOAD_REQUESTS,
+export const loadRequestsTrigger = () => ({
+  type: LOAD_REQUESTS_TRIGGER,
 });
 
-export const putRequestsData = (data) => ({
-  type: PUT_REQUESTS_DATA,
+export const updateRequests = (data) => ({
+  type: UPDATE_REQUESTS,
   data,
 });
 
 export const changeLoadingStatus = (status) => ({
-  type: REQUEST_LOADING,
+  type: CHANGE_LOADING_STATUS,
   status,
+});
+
+export const changeSavingStatus = (status) => ({
+  type: CHANGE_SAVING_STATUS,
+  status,
+});
+
+export const newRequest = (data , historyRouter) => ({
+  type: NEW_REQUEST,
+  data,
+  historyRouter,
 });
