@@ -81,7 +81,7 @@ export const editOne = (id, data) => {
     setTimeout(() => {
       if (Math.random() < PROBABILITY) {
         const index = data.findIndex(item => item.id === id);
-        if (!~result && result >= 0) {
+        if (!~index && index >= 0) {
           data[index] = {...data};
           resolve(data[index]);
         } else {
