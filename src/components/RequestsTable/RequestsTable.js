@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -12,7 +13,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteButton from '../DeleteButton';
 import Loader from '../Loader';
-import * as requestsApi from '../../api/requests';
+import { loadRequests } from '../../store/actions/requests';
 
 const useStyles = makeStyles({
   table: {
@@ -22,22 +23,12 @@ const useStyles = makeStyles({
 
 const RequestsTable = () => {
   const classes = useStyles();
-  const [ loading, setLoading ] = useState(false);
-  const [ requests, setRequests ] = useState([]);
+  const loading = useSelector(state => state.requests.isLoading);
+  const requests = useSelector(state => state.requests.requests);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setLoading(true);
-    requestsApi.getAll()
-    .then(data => {
-      if (data && data.length && data.length >= 1) {
-        setRequests(data);
-      }
-      setLoading(false);
-    })
-    .catch(err => {
-      setLoading(false);
-      console.log(err);
-    });
+    dispatch(loadRequests());
   }, []);
 
   const MyTable = () => {
