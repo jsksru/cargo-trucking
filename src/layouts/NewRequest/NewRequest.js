@@ -1,3 +1,4 @@
+import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from  '@material-ui/core/Typography';
@@ -5,8 +6,8 @@ import Button from '@material-ui/core/Button';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 import { Link } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
-import * as requestsApi from '../../api/requests';
 import { useHistory } from 'react-router-dom';
+import { newRequest, changeSavingStatus } from '../../store/actions/requests';
 
 const NewRequest = () => {
   const [ client, setClient ] = useState('');
@@ -14,24 +15,19 @@ const NewRequest = () => {
   const [ carrierPhone, setCarrierPhone ] = useState('');
   const [ carrierCode, setCarrierCode ] = useState('');
   const [ comments, setComments ] = useState('');
-  const [ isSaving, setIsSaving ] = useState(false);
+  const isSaving = useSelector(state => state.requests.isSaving);
   const history = useHistory();
+  const dispatch = useDispatch();
 
-  const handleCreateButton = () => {
-    setIsSaving(true);
-    requestsApi.addNew({
+  const handleCreateButton = async () => {
+    dispatch(changeSavingStatus(true));
+    dispatch(newRequest({
       client,
       carrier,
       carrierPhone,
-      comments,
-    }).then(id => {
-      if (id) {
-        setIsSaving(false);
-        history.push('/');
-      }
-    }).catch(err => {
-      console.log(err);
-    });
+      carrierCode,
+      comments
+    }, history));
   }
 
   return (
