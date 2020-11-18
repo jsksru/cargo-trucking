@@ -11,13 +11,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 const DeleteButton = ({ id }) => {
   const [open, setOpen] = useState(false);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  const handleClose = () => setOpen(false);
+  const handleOpen = () => setOpen(true);
 
   const handleDelete = () => {
     console.log(`Заявка с номером ${id} удалена !`);
