@@ -93,3 +93,21 @@ export const editOne = (id, data) => {
     }, TIMEOUT);
   });
 }
+
+export const deleteOne = (id) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (Math.random() < PROBABILITY) {
+        const index = requestsData.findIndex(item => item.id === id);
+        if (!~index && index >= 0) {
+          requestsData.splice(index, 1);
+          resolve(index);
+        } else {
+          resolve(null);
+        }
+      } else {
+        reject(new Error('PROBABILITY ERROR'));
+      }
+    }, TIMEOUT);
+  });
+}
