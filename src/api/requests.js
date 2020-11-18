@@ -1,10 +1,10 @@
 // FAKE
 
 const TIMEOUT = 500;
-const PROBABILITY = 0.7;
+const PROBABILITY = 2;
 let counter = 102;
 
-const data = [
+const requestsData = [
   {
     id: 101,
     number: 'A01',
@@ -33,7 +33,7 @@ export const getAll = (limit = 0, page = 0) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (Math.random() < PROBABILITY) {
-        resolve(data);
+        resolve(requestsData);
       } else {
         reject(new Error('PROBABILITY ERROR'));
       }
@@ -45,7 +45,7 @@ export const getOne = (id) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (Math.random() < PROBABILITY) {
-        const result = data.find(item => item.id === id);
+        const result = requestsData.find(item => item.id === id);
         if (result && result.id) {
           resolve(result);
         } else {
@@ -62,7 +62,7 @@ export const addNew = (data) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (Math.random() < PROBABILITY) {
-        data.push({
+        requestsData.push({
           ...data,
           id: ++counter,
           number: 'A' + counter,
@@ -80,10 +80,10 @@ export const editOne = (id, data) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (Math.random() < PROBABILITY) {
-        const index = data.findIndex(item => item.id === id);
+        const index = requestsData.findIndex(item => item.id === id);
         if (!~index && index >= 0) {
-          data[index] = {...data};
-          resolve(data[index]);
+          requestsData[index] = {...data};
+          resolve(requestsData[index]);
         } else {
           resolve(null);
         }
