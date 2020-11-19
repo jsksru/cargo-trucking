@@ -14,6 +14,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteButton from '../DeleteButton';
 import Loader from '../Loader';
 import { loadRequestsTrigger } from '../../store/actions/requests';
+import { formatDateTime } from '../../utils';
+import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles({
   table: {
@@ -35,11 +37,13 @@ const RequestsTable = () => {
     const rows = requests.map((row) => (
       <TableRow key={row.id}>
         <TableCell component="th" scope="row">{row.number}</TableCell>
-        <TableCell align="left">{row.datetime}</TableCell>
+        <TableCell align="left">{formatDateTime(row.datetime)}</TableCell>
         <TableCell align="left">{row.client}</TableCell>
         <TableCell align="left">{row.carrier}</TableCell>
         <TableCell align="left">{row.carrierPhone}</TableCell>
-        <TableCell align="left">{row.code}</TableCell>
+        <TableCell align="left">
+          <Link href={`https://ati.su/firms/${row.code}/info`} target="_blank">{row.code}</Link>
+        </TableCell>
         <TableCell align="right">
           <IconButton aria-label="View">
             <VisibilityIcon />
