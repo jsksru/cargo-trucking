@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import { useHistory } from 'react-router-dom';
 import { newRequest, changeSavingStatus } from '../../store/actions/requests';
+import ClientSelector from '../../components/ClientSelector';
 
 const NewRequest = () => {
   const [ client, setClient ] = useState('');
@@ -41,6 +42,9 @@ const NewRequest = () => {
       </Grid>
     </Grid>
     <Grid container spacing={3}>
+      <Grid item>
+        <ClientSelector />
+      </Grid>
       <Grid item lg={6} xs={12}>
         <TextField
           id="client-field"
