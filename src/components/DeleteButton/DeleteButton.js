@@ -7,15 +7,33 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import api from '../../api';
 
 const DeleteButton = ({ id }) => {
   const [open, setOpen] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const handleClose = () => setOpen(false);
   const handleOpen = () => setOpen(true);
 
   const handleDelete = () => {
-    console.log(`Заявка с номером ${id} удалена !`);
+    setIsSaving(true);
+    api.requests.deleteById(id)
+      .then(result => {
+        if (result || result === 0) {
+          console.log(`Заявка с id=${id} - удалена!`);
+        } else {
+          console.log(`Ошибка удаления заявки с id=${id} !`);
+        }
+      })
+      .catch(e => {
+        console.log(e);
+      })
+      .finally(() => {
+        setIsSaving(false);
+        handleClose();
+        window._FORCE_UPDATE_REQUESTS();
+      });
   };
 
   return (
@@ -37,7 +55,11 @@ const DeleteButton = ({ id }) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="default">Отмена</Button>
-          <Button onClick={handleDelete} color="secondary" autoFocus>Удалить</Button>
+          {
+            isSaving ?
+              <Button color="secondary" disabled>Удаление...</Button> :
+              <Button onClick={handleDelete} color="secondary" autoFocus>Удалить</Button>
+          }
         </DialogActions>
       </Dialog>
     </>
