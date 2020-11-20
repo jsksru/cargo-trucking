@@ -1,7 +1,10 @@
+import { useParams } from 'react-router-dom';
+
 const Request = () => {
+  const params = useParams();
   return (
     <div>
-      Request
+      info : {params.id}
     </div>
   );
 };
