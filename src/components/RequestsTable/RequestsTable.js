@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
-import StaticLink from '@material-ui/core/Link'
+import StaticLink from '@material-ui/core/Link';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -46,7 +46,7 @@ const RequestsTable = () => {
   };
 
   window._FORCE_UPDATE_REQUESTS = updateRequests;
-
+  
   useEffect(() => {
     updateRequests();
   }, []);
