@@ -38,9 +38,9 @@ const clientsData = [
 ];
 
 const carriersData = [
-  { id: 1, name: 'Петров А.С.', phone: '79121111103', code: '124364' },
-  { id: 2, name: 'Зайцев С.А.', phone: '79040101104', code: '123464' },
-  { id: 3, name: 'Гусев И.Ф.', phone: '79000202109', code: '134364' },
+  { id: 1, name: 'Абросимов В.В.', phone: '79121111103', code: '1264966' },
+  { id: 2, name: 'Вакутин А.Б.', phone: '79040101104', code: '1050772' },
+  { id: 3, name: 'Лавров С.М.', phone: '79000202109', code: '1753943' },
 ];
 
 /// END FAKE DB DATA
