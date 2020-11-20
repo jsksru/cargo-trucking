@@ -69,10 +69,8 @@ const ClientSelector = ({ selectHandler }) => {
         open={open}
         keepMounted
         onClose={handleClose}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">Выберите перевозчика</DialogTitle>
+        <DialogTitle>Выберите перевозчика</DialogTitle>
         <DialogContent>
           <SelectorWidget items={items} selectHandler={widgetSelector} />
         </DialogContent>

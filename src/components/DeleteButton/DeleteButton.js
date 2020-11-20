@@ -32,7 +32,6 @@ const DeleteButton = ({ id }) => {
       .finally(() => {
         setIsSaving(false);
         handleClose();
-        window._FORCE_UPDATE_REQUESTS();
       });
   };
 

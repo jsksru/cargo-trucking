@@ -57,11 +57,12 @@ const NewRequest = () => {
       comments,
     }).then(id => {
       if (id) {
-        setIsSaving(false);
         history.push('/');
       }
     }).catch(err => {
       console.log(err);
+    }).finally(() => {
+      setIsSaving(false);
     });
   }
 
@@ -110,7 +111,7 @@ const NewRequest = () => {
                 </TableCell>
                 <TableCell>
                   <TextField fullWidth
-                    id="outlined-multiline-static"
+                    id="request-edit-comments"
                     label="Комментарии"
                     multiline
                     rows={5}

@@ -44,8 +44,6 @@ const RequestsTable = () => {
       console.log(err);
     });
   };
-
-  window._FORCE_UPDATE_REQUESTS = updateRequests;
   
   useEffect(() => {
     updateRequests();
