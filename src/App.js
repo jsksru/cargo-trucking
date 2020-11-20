@@ -9,7 +9,7 @@ const Request = lazy(()=>import('./layouts/Request'));
 const NewRequest = lazy(()=>import('./layouts/NewRequest'));
 const RequestEdit = lazy(()=>import('./layouts/RequestEdit'));
 
-function App() {  
+const App = () => {
   return (
     <Router>
       <Container>
@@ -33,7 +33,7 @@ function App() {
       </Container>
     </Router>
   );
-}
+};
 
 export default App;
 
