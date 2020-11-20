@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 import { Link } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
-import * as requestsApi from '../../api/requests';
+import api from '../../api';
 import { useHistory } from 'react-router-dom';
 
 const NewRequest = () => {
@@ -19,10 +19,9 @@ const NewRequest = () => {
 
   const handleCreateButton = () => {
     setIsSaving(true);
-    requestsApi.addNew({
+      api.requests.addNew({
       client,
       carrier,
-      carrierPhone,
       comments,
     }).then(id => {
       if (id) {
