@@ -8,6 +8,11 @@ import TextField from '@material-ui/core/TextField';
 import api from '../../api';
 import ClientSelector from '../../components/ClientSelector';
 import CarrierSelector from '../../components/CarrierSelector';
+import TableContainer from '@material-ui/core/TableContainer';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
 
 const NewRequest = () => {
   const [ client, setClient ] = useState(null);
@@ -36,29 +41,52 @@ const NewRequest = () => {
     <>
     <Grid container spacing={3} direction="column">
       <Grid item>
-      <Button component={Link} to="/" variant="outlined" size="small" startIcon={<KeyboardReturnIcon />}>Назад к списку заявок</Button>
+        <Button component={Link} to="/" variant="outlined" size="small" startIcon={<KeyboardReturnIcon />}>Назад к списку заявок</Button>
       </Grid>
       <Grid item>
         <Typography variant="h4" component="h1">Новая заявка</Typography>
       </Grid>
     </Grid>
     <Grid container spacing={3}>
-      <Grid item lg={6} xs={12}>
-        <ClientSelector selectHandler={setClient} />
-      </Grid>
-      <Grid item lg={6} xs={12}>
-        <CarrierSelector selectHandler={setCarrier} />
-      </Grid>
       <Grid item xs={12}>
-        <TextField fullWidth
-          id="outlined-multiline-static"
-          label="Комментарии"
-          multiline
-          rows={5}
-          variant="outlined"
-          value={comments}
-          onInput={(e) => setComments(e.target.value)}
-        />
+        <TableContainer>
+          <Table aria-label="simple table">
+            <TableBody>
+              <TableRow>
+                <TableCell>
+                  <Typography variant="button">Фирма клиента</Typography>
+                </TableCell>
+                <TableCell>
+                  <ClientSelector selectHandler={setClient} />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <Typography variant="button">Перевозчик</Typography>
+                </TableCell>
+                <TableCell>
+                  <CarrierSelector selectHandler={setCarrier} />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <Typography variant="button">Комментарий</Typography>
+                </TableCell>
+                <TableCell>
+                  <TextField fullWidth
+                    id="outlined-multiline-static"
+                    label="Комментарии"
+                    multiline
+                    rows={5}
+                    variant="outlined"
+                    value={comments}
+                    onInput={(e) => setComments(e.target.value)}
+                  />
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Grid>
       <Grid item xs={12}>
         <Grid container justify="flex-end">
