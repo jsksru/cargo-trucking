@@ -9,4 +9,9 @@ App.use(cors());
 
 App.use('/carriers', CarriersRouter);
 
+App.use((err, request, response, next) => {
+  console.log(err);
+  response.status(500).json({error: 'Server error'});
+});
+
 module.exports = App;
