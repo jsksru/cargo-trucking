@@ -1,14 +1,13 @@
 const express = require('express');
 const Router = express.Router();
-const fs = require('fs');
-const fsPromises = fs.promises;
+const fs = require('fs').promises;
 const path = require('path');
 
 const FILE_NAME = path.resolve('server/data/','requests.json');
 
 Router.get('/', async (req, res) => {
   try {
-    const fileData = await fsPromises.readFile(FILE_NAME);
+    const fileData = await fs.readFile(FILE_NAME);
     const data = JSON.parse(fileData);
     res.status(200).json(data);
   }
@@ -19,7 +18,7 @@ Router.get('/', async (req, res) => {
 
 Router.post('/', async (req, res) => {
   try {
-    const fileData = await fsPromises.readFile(FILE_NAME);
+    const fileData = await fs.readFile(FILE_NAME);
     const data = JSON.parse(fileData);
     const lastindex = data[data.length - 1].id;
     data.push({
@@ -28,7 +27,7 @@ Router.post('/', async (req, res) => {
       datetime: new Date(),
     });
     const newLength = data.length;
-    await fsPromises.writeFile(FILE_NAME, JSON.stringify(data));
+    await fs.writeFile(FILE_NAME, JSON.stringify(data));
     res.status(201).json({
       saved: true,
       newLength,
