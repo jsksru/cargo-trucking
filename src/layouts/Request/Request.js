@@ -11,6 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Button from '@material-ui/core/Button';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
+import { formatDateTimeFull, formatPhoneNumber } from '../../utils';
 
 const Request = () => {
   const params = useParams();
@@ -50,7 +51,7 @@ const Request = () => {
                   <Typography variant="button">Дата и время создания</Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography variant="body1">{request.datetime}</Typography>
+                  <Typography variant="body1">{formatDateTimeFull(request.datetime)}</Typography>
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -59,7 +60,7 @@ const Request = () => {
                 </TableCell>
                 <TableCell>
                   <Typography variant="body1" gutterBottom>{request.client.name}</Typography>
-                  <Typography variant="body1">{request.client.phone}</Typography>
+                  <Typography variant="body1">{formatPhoneNumber(request.client.phone)}</Typography>
                 </TableCell>
               </TableRow>
               <TableRow>
