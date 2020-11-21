@@ -4,10 +4,10 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AppHeader from './components/AppHeader';
 import Loader from './components/Loader';
 
-const Main = lazy(()=>import('./layouts/Main'));
-const Request = lazy(()=>import('./layouts/Request'));
-const NewRequest = lazy(()=>import('./layouts/NewRequest'));
-const RequestEdit = lazy(()=>import('./layouts/RequestEdit'));
+const Main = lazy(() => import('./layouts/Main'));
+const Request = lazy(() => import('./layouts/Request'));
+const NewRequest = lazy(() => import('./layouts/NewRequest'));
+const RequestEdit = lazy(() => import('./layouts/RequestEdit'));
 
 const App = () => {
   return (
