@@ -40,15 +40,14 @@ const DeleteButton = ({ id }) => {
       <IconButton aria-label="Delete" color="secondary" onClick={handleOpen}>
         <DeleteIcon />
       </IconButton>
+      {open &&
       <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Удаление заявки</DialogTitle>
+        <DialogTitle>Удаление заявки</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <DialogContentText>
             Вы точно хотите удалить заявку с номером {id} ?
           </DialogContentText>
         </DialogContent>
@@ -61,6 +60,7 @@ const DeleteButton = ({ id }) => {
           }
         </DialogActions>
       </Dialog>
+      }
     </>
   );
 };
