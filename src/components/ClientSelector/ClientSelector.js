@@ -8,13 +8,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import api from '../../api';
 
-const ClientSelector = ({ selectHandler }) => {
+const ClientSelector = ({ initID, initName, selectHandler }) => {
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedID, setSelectedID] = useState(null);
-  const [selectedName, setSelectedName] = useState(null);
-  const [confirmedName, setConfirmedName] = useState(null);
+  const [selectedID, setSelectedID] = useState(initID || null);
+  const [selectedName, setSelectedName] = useState(initName || null);
+  const [confirmedName, setConfirmedName] = useState(initName || null);
 
   const confirmSelect = (id) => {
     selectHandler(selectedID);
@@ -27,10 +27,12 @@ const ClientSelector = ({ selectHandler }) => {
   };
 
   const handleClose = () => {
-    setSelectedID(null);
-    setSelectedName(null);
-    setConfirmedName(null)
-    selectHandler(null);
+    if (!selectedID && !selectedName && !confirmedName) {
+      setSelectedID(null);
+      setSelectedName(null);
+      setConfirmedName(null);
+      selectHandler(null);
+    }
     setOpen(false);
   };
 
@@ -64,14 +66,13 @@ const ClientSelector = ({ selectHandler }) => {
         Клиент: {confirmedName? confirmedName: 'Не выбран'}
       </div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>Выбрать фирму клиента</Button>
+      {open &&
       <Dialog
-        style={{overflowY: 'hidden'}}
         open={open}
-        keepMounted
         onClose={handleClose}
       >
         <DialogTitle>Выберите фирму клиента</DialogTitle>
-        <DialogContent>
+        <DialogContent style={{overflowY: 'hidden'}}>
           <SelectorWidget items={items} selectHandler={widgetSelector} />
         </DialogContent>
         <DialogActions>
@@ -88,6 +89,7 @@ const ClientSelector = ({ selectHandler }) => {
           
         </DialogActions>
       </Dialog>
+      }
     </>
   );
 };
