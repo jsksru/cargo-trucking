@@ -1,1 +1,23 @@
-[{"id":1,"datetime":"2020-01-11T14:02:18.844Z","client":1,"carrier":1,"comments":"комментарий к первой заявке"},{"id":2,"datetime":"2020-02-02T21:22:18.844Z","client":2,"carrier":2,"comments":"комментарий ко второй заявке"},{"id":3,"datetime":"2020-10-19T13:59:18.844Z","client":3,"carrier":3,"comments":""},{"client":3,"carrier":2,"comments":"bla bla bla","id":4,"datetime":"2020-11-21T13:40:47.265Z"},{"client":6,"carrier":1,"comments":"bla2 bla2 bla2","id":5,"datetime":"2020-11-21T13:43:43.272Z"},{"client":1,"carrier":1,"comments":"text","id":6,"datetime":"2020-11-21T13:56:57.379Z"}]
+[
+  {
+    "id": 1,
+    "datetime": "2020-11-02T09:10:02.000Z",
+    "client": 1,
+    "carrier": 1,
+    "comments": "комментарий к первой заявке"
+  },
+  {
+    "id": 2,
+    "datetime": "2020-02-12T14:01:20.000Z",
+    "client": 2,
+    "carrier": 2,
+    "comments": "комментарий ко второй заявке"
+  },
+  {
+    "id": 3,
+    "datetime": "2019-05-10T07:48:33.000Z",
+    "client": 3,
+    "carrier": 3,
+    "comments": ""
+  }
+]
