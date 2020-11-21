@@ -8,15 +8,15 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import api from '../../api';
 
-const ClientSelector = ({ initID, initName, selectHandler }) => {
+const ClientSelector = ({ initID, selectHandler }) => {
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedID, setSelectedID] = useState(initID || null);
-  const [selectedName, setSelectedName] = useState(initName || null);
-  const [confirmedName, setConfirmedName] = useState(initName || null);
+  const [selectedName, setSelectedName] = useState(null);
+  const [confirmedName, setConfirmedName] = useState(null);
 
-  const confirmSelect = (id) => {
+  const confirmSelect = () => {
     selectHandler(selectedID);
     setConfirmedName(selectedName);
     setOpen(false);
@@ -42,6 +42,14 @@ const ClientSelector = ({ initID, initName, selectHandler }) => {
       .then(data => {
         if (data && data.length && data.length > 0) {
           setItems(data);
+          if (initID) {
+            const res = data.find(item => item.id === initID);
+            if (res) {
+              setSelectedID(res.id);
+              setSelectedName(res.name);
+              setConfirmedName(res.name);
+            }
+          }
         } else {
           setItems([]);
         }
@@ -52,7 +60,7 @@ const ClientSelector = ({ initID, initName, selectHandler }) => {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [initID]);
 
   const widgetSelector = (id, name) => {
     setSelectedID(id);
