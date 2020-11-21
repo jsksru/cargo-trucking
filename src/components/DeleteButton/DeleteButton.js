@@ -31,6 +31,7 @@ const DeleteButton = ({ id }) => {
       })
       .finally(() => {
         setIsSaving(false);
+        window['__FORCE_TABLE_UPDATE']();
         handleClose();
       });
   };
@@ -47,7 +48,7 @@ const DeleteButton = ({ id }) => {
       >
         <DialogTitle>Удаление заявки</DialogTitle>
         <DialogContent>
-          <DialogContentText>
+          <DialogContentText id="alert-dialog-description">
             Вы точно хотите удалить заявку с номером {id} ?
           </DialogContentText>
         </DialogContent>
