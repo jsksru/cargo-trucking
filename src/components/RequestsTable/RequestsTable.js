@@ -25,11 +25,10 @@ const useStyles = makeStyles({
 
 const RequestsTable = () => {
   const classes = useStyles();
-  const [ loading, setLoading ] = useState(false);
+  const [ loading, setLoading ] = useState(true);
   const [ requests, setRequests ] = useState([]);
 
   const updateRequests = () => {
-    setLoading(true);
     api.requests.getAll()
     .then(data => {
       if (data && data.length && data.length >= 1) {
@@ -40,8 +39,9 @@ const RequestsTable = () => {
       setLoading(false);
     })
     .catch(err => {
+      setRequests([]);
       setLoading(false);
-      console.log(err);
+      console.log('catch', err);
     });
   };
   
