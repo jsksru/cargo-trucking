@@ -6,6 +6,8 @@ Router.get('/', CarriersController.getAll);
 
 Router.get('/:id', CarriersController.getOne);
 
+Router.delete('/:id', CarriersController.deleteById);
+
 Router.post('/', CarriersController.addNew);
 
 module.exports = Router;
