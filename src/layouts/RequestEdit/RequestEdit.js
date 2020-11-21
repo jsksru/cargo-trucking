@@ -56,7 +56,7 @@ const NewRequest = () => {
   const handleCreateButton = () => {
     setIsSaving(true);
       api.requests.editById(requestId, {
-      datetime: datetime,
+      datetime,
       client,
       carrier,
       comments,
@@ -91,7 +91,7 @@ const NewRequest = () => {
                   <Typography variant="button">Дата и время создания</Typography>
                 </TableCell>
                 <TableCell>
-                  <DateTimeSelector initValue={datetime} handler={(value) => setDatetime(Date.parse(value))} />
+                  <DateTimeSelector initValue={datetime} handler={(value) => setDatetime(value)} />
                 </TableCell>
               </TableRow>
               <TableRow>

@@ -1,11 +1,9 @@
 export const formatDateTime = (datetime) => {
-  const dt = new Date(datetime);
-  return dt.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' }) + ' ' + dt.toLocaleTimeString('ru-RU', { hour: 'numeric', minute: '2-digit' });
+  return datetime.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' }) + ' ' + datetime.toLocaleTimeString('ru-RU', { hour: 'numeric', minute: '2-digit' });
 };
 
 export const formatDateTimeFull = (datetime) => {
-  const dt = new Date(datetime);
-  return dt.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' }) + ' в ' + dt.toLocaleTimeString('ru-RU', { hour: 'numeric', minute: '2-digit' });
+  return datetime.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' }) + ' в ' + datetime.toLocaleTimeString('ru-RU', { hour: 'numeric', minute: '2-digit' });
 };
 
 export const formatPhoneNumber = (phone) => {

@@ -10,21 +10,21 @@ let carriersCounter = 3;
 const requestsData = [
   {
     id: 1,
-    datetime: Date.parse('2020-11-10T14:48:00'),
+    datetime: new Date('2020-11-02T14:10:02'),
     client: 1,
     carrier: 1,
     comments: 'комментарий к первой заявке'
   },
   {
     id: 2,
-    datetime: Date.parse('2020-11-10T12:20:00'),
+    datetime: new Date('2020-02-12T19:01:20'),
     client: 2,
     carrier: 2,
     comments: 'комментарий ко второй заявке'
   },
   {
     id: 3,
-    datetime: Date.parse('2020-11-10T11:05:00'),
+    datetime: new Date('2019-05-10T12:48:33'),
     client: 3,
     carrier: 3,
     comments: ''
@@ -99,7 +99,7 @@ const requestsApi = {
           requestsData.push({
             ...data,
             id: ++requestCounter,
-            datetime: Date.now(),
+            datetime: new Date(),
           })
           resolve(requestCounter);
         } else {
