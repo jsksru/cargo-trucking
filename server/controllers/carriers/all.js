@@ -15,8 +15,6 @@ module.exports = async(req, res) => {
     const clients = JSON.parse(clientsFileData);
     const carriers = JSON.parse(carriersFileData);
 
-    
-
     const mappedData = requests.map(item => {
       const client = clients.find(i => i.id === item.client);
       const carrier = carriers.find(i => i.id === item.carrier);
