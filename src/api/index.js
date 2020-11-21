@@ -10,21 +10,21 @@ let carriersCounter = 3;
 const requestsData = [
   {
     id: 1,
-    datetime: Date('2020-11-10T14:48:00'),
+    datetime: Date.parse('2020-11-10T14:48:00'),
     client: 1,
     carrier: 1,
     comments: 'комментарий к первой заявке'
   },
   {
     id: 2,
-    datetime: Date('2020-11-10T12:20:00'),
+    datetime: Date.parse('2020-11-10T12:20:00'),
     client: 2,
     carrier: 2,
     comments: 'комментарий ко второй заявке'
   },
   {
     id: 3,
-    datetime: Date('2020-11-10T11:05:00'),
+    datetime: Date.parse('2020-11-10T11:05:00'),
     client: 3,
     carrier: 3,
     comments: ''
@@ -50,14 +50,18 @@ const requestsApi = {
 
   getAll: () => {
     return new Promise((resolve, reject) => {
-      const mappedData = requestsData.map(item => ({
-        id: item.id,
-        datetime: item.datetime,
-        client: clientsData.find(i => i.id === item.client).name,
-        carrier: carriersData.find(i => i.id === item.carrier).name,
-        phone: carriersData.find(i => i.id === item.carrier).phone,
-        code: carriersData.find(i => i.id === item.carrier).code,
-      }));
+      const mappedData = requestsData.map(item => {
+        const clientById = clientsData.find(i => i.id === item.client);
+        const carrierById = carriersData.find(i => i.id === item.carrier);
+        return {
+          id: item.id,
+          datetime: item.datetime,
+          client: clientById.name,
+          carrier: carrierById.name,
+          phone: carrierById.phone,
+          code: carrierById.code,
+        };
+      });
 
       setTimeout(() => {
         if (Math.random() < PROBABILITY) {
@@ -73,7 +77,7 @@ const requestsApi = {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (Math.random() < PROBABILITY) {
-          const result = requestsData.find(item => item.id === id);
+          const result = {...requestsData.find(item => item.id === id)};
           if (result && result.id) {
             result.client = clientsData.find(item => item.id === result.client);
             result.carrier = carriersData.find(item => item.id === result.carrier);
@@ -111,7 +115,10 @@ const requestsApi = {
         if (Math.random() < PROBABILITY) {
           const index = requestsData.findIndex(item => item.id === id);
           if (index !== -1 && index >= 0) {
-            requestsData[index] = {...data};
+            requestsData[index] = {
+              ...requestsData[index],
+              ...data
+            };
             resolve(requestsData[index]);
           } else {
             resolve(null);
