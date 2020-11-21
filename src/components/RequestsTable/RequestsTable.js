@@ -29,6 +29,7 @@ const RequestsTable = () => {
   const [ requests, setRequests ] = useState([]);
 
   const updateRequests = () => {
+    setLoading(true);
     api.requests.getAll()
     .then(data => {
       if (data && data.length && data.length >= 1) {
@@ -44,6 +45,7 @@ const RequestsTable = () => {
       console.log('catch', err);
     });
   };
+  window['__FORCE_TABLE_UPDATE'] = updateRequests;
   
   useEffect(() => {
     updateRequests();
