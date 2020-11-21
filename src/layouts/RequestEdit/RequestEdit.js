@@ -55,7 +55,8 @@ const NewRequest = () => {
 
   const handleCreateButton = () => {
     setIsSaving(true);
-      api.requests.addNew({
+      api.requests.editById(requestId, {
+      datetime: Date.parse(datetime),
       client,
       carrier,
       comments,
