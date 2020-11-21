@@ -23,7 +23,9 @@ const NewRequest = () => {
 
   const [ datetime, setDatetime ] = useState(null);
   const [ client, setClient ] = useState(null);
+  const [ clientName, setClientName ] = useState(null);
   const [ carrier, setCarrier ] = useState(null);
+  const [ carrierName, setCarrierName ] = useState(null);
   const [ comments, setComments ] = useState('');
   const [ isSaving, setIsSaving ] = useState(false);
   const history = useHistory();
@@ -33,11 +35,13 @@ const NewRequest = () => {
     api.requests.getOne(parseInt(params.id))
       .then(result => {
         if (result) {
-          setRequestId(result.id)
+          setRequestId(result.id);
           setDatetime(result.datetime);
           setClient(result.client.id);
+          setClientName(result.client.name);
           setCarrier(result.carrier.id);
-          setComments(result.comments)
+          setCarrierName(result.carrier.name);
+          setComments(result.comments);
         }
       })
       .catch(e => {
@@ -94,7 +98,7 @@ const NewRequest = () => {
                   <Typography variant="button">Фирма клиента</Typography>
                 </TableCell>
                 <TableCell>
-                  <ClientSelector selectHandler={setClient} />
+                  <ClientSelector initID={client} initName={clientName} selectHandler={setClient} />
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -102,7 +106,7 @@ const NewRequest = () => {
                   <Typography variant="button">Перевозчик</Typography>
                 </TableCell>
                 <TableCell>
-                  <CarrierSelector selectHandler={setCarrier} />
+                  <CarrierSelector initID={carrier} initName={carrierName} selectHandler={setCarrier} />
                 </TableCell>
               </TableRow>
               <TableRow>
