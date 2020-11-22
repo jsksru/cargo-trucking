@@ -19,19 +19,20 @@ const Request = () => {
   const [ request, setRequest ] = useState({});
 
   useEffect(() => {
-    setLoading(true);
-    api.requests.getOne(parseInt(params.id))
-      .then(result => {
-        if (result) {
-          setRequest(result);
+    (async()=>{
+      setLoading(true);
+      try {
+        const responseData = await api.requests.getOne(parseInt(params.id));
+        if (responseData && responseData.id) {
+          setRequest(responseData);
+        } else {
+          console.log('нет такого id');
         }
-      })
-      .catch(e => {
-        console.log(e);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      } catch (err) {
+        console.log(err);
+      }
+      setLoading(false);
+    })();
   }, [params.id]);
 
   return loading ? <Loader />: (

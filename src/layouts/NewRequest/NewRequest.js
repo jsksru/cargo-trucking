@@ -23,21 +23,21 @@ const NewRequest = () => {
   const [ isSaving, setIsSaving ] = useState(false);
   const history = useHistory();
 
-  const handleCreateButton = () => {
+  const handleCreateButton = async() => {
     setIsSaving(true);
-      api.requests.addNew({
-      client,
-      carrier,
-      comments,
-    }).then(id => {
-      if (id) {
-        history.push('/');
+    try {
+      const responseData = await api.requests.addNew({ client, carrier, comments });
+      if (responseData && responseData.newLength) {
+        console.log('Заявка добавлена');
+      } else {
+        console.log('Ошибка добавления заявки');
       }
-    }).catch(err => {
+    }
+    catch (err) {
       console.log(err);
-    }).finally(() => {
-      setIsSaving(false);
-    });
+    }
+    setIsSaving(false);
+    history.push('/')
   }
 
   return (

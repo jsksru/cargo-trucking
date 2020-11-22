@@ -28,22 +28,15 @@ const RequestsTable = () => {
   const [ loading, setLoading ] = useState(true);
   const [ requests, setRequests ] = useState([]);
 
-  const updateRequests = () => {
+  const updateRequests = async() => {
     setLoading(true);
-    api.requests.getAll()
-    .then(data => {
-      if (data && data.length && data.length >= 1) {
-        setRequests(data);
-      } else {
-        setRequests([]);
-      }
-      setLoading(false);
-    })
-    .catch(err => {
-      setRequests([]);
-      setLoading(false);
-      console.log('catch', err);
-    });
+    try {
+      const dataFromServer = await api.requests.getAll();
+      if (dataFromServer) setRequests(dataFromServer);
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
   };
   window['__FORCE_TABLE_UPDATE'] = updateRequests;
   

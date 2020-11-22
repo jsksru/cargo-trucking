@@ -31,44 +31,45 @@ const NewRequest = () => {
   const history = useHistory();
 
   useEffect(() => {
-    setLoading(true);
-    api.requests.getOne(parseInt(params.id))
-      .then(result => {
-        if (result) {
-          setRequestId(result.id);
-          setDatetime(result.datetime);
-          setClient(result.client.id);
-          setClientName(result.client.name);
-          setCarrier(result.carrier.id);
-          setCarrierName(result.carrier.name);
-          setComments(result.comments);
+    (async()=>{
+      setLoading(true);
+      try {
+        const responseData = await api.requests.getOne(parseInt(params.id));
+        if (responseData && responseData.id) {
+          setRequestId(responseData.id);
+          setDatetime(responseData.datetime);
+          setClient(responseData.client.id);
+          setClientName(responseData.client.name);
+          setCarrier(responseData.carrier.id);
+          setCarrierName(responseData.carrier.name);
+          setComments(responseData.comments);
+        } else {
+          console.log('нет такого id');
         }
-      })
-      .catch(e => {
-        console.log(e);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      } catch (err) {
+        console.log('нет такого id или ошибка получения данных с сервера');
+        console.log(err);
+      }
+      setLoading(false);
+    })();
   }, [params.id]);
   
 
-  const handleCreateButton = () => {
+  const handleCreateButton = async() => {
     setIsSaving(true);
-      api.requests.editById(requestId, {
-      datetime,
-      client,
-      carrier,
-      comments,
-    }).then(id => {
-      if (id) {
-        history.push('/');
+    try {
+      const responseData = await api.requests.editById(requestId, { datetime, client, carrier, comments });
+      if (responseData && responseData.id) {
+        console.log('заявка изменена');
+      } else {
+        console.log('ошибка изменения заявки');
       }
-    }).catch(err => {
+    } catch (err) {
+      console.log('ошибка изменения заявки');
       console.log(err);
-    }).finally(() => {
-      setIsSaving(false);
-    });
+    }
+    setIsSaving(false);
+    history.push('/');
   }
 
   return loading ? <Loader />: (
