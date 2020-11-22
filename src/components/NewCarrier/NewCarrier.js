@@ -9,9 +9,9 @@ import api from '../../api';
 
 const NewCarrier = ({ selectHandler }) => {
   const [ open, setOpen ] = useState(false);
-  const [ name, setName ] = useState(null);
-  const [ phone, setPhone ] = useState(null);
-  const [ code, setCode ] = useState(null);
+  const [ name, setName ] = useState('');
+  const [ phone, setPhone ] = useState('');
+  const [ code, setCode ] = useState('');
   const [ saving, setSaving ] = useState(false);
 
   const handleOpen = () => {
@@ -19,25 +19,22 @@ const NewCarrier = ({ selectHandler }) => {
   };
   const handleClose = () => {
     setOpen(false);
-    setName(null);
-    setPhone(null);
-    setCode(null);
+    setName('');
+    setPhone('');
+    setCode('');
   };
-  const hadleConfirm = () => {
+  const hadleConfirm = async() => {
     setSaving(true);
-    api.carriers.addNew({ name, phone, code })
-      .then(result => {
-        if (result || result === 0) {
-          selectHandler(result);
-          setOpen(false);
-        }
-      })
-      .catch(e => {
-        console.log(e);
-      })
-      .finally(() => {
-        setSaving(false);
-      });
+    try {
+      const responseData = await api.carriers.addNew({name, phone, code});
+      if (responseData && responseData.data && responseData.data.id) {
+        selectHandler(responseData.data.id)
+      }
+    }
+    catch(err) {
+      console.log(err);
+    }
+    setOpen(false);
   };
 
   return (
@@ -51,7 +48,7 @@ const NewCarrier = ({ selectHandler }) => {
               autoFocus
               margin="dense"
               id="name"
-              label="Имя / Название фирмы *"
+              label="ФИО / Название фирмы перевозчика *"
               type="text"
               fullWidth
               value={name}

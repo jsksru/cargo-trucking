@@ -9,8 +9,8 @@ import api from '../../api';
 
 const NewCllient = ({ selectHandler }) => {
   const [ open, setOpen ] = useState(false);
-  const [ name, setName ] = useState(null);
-  const [ phone, setPhone ] = useState(null);
+  const [ name, setName ] = useState('');
+  const [ phone, setPhone ] = useState('');
   const [ saving, setSaving ] = useState(false);
 
   const handleOpen = () => {
@@ -18,24 +18,21 @@ const NewCllient = ({ selectHandler }) => {
   };
   const handleClose = () => {
     setOpen(false);
-    setName(null);
-    setPhone(null);
+    setName('');
+    setPhone('');
   };
-  const hadleConfirm = () => {
+  const hadleConfirm = async() => {
     setSaving(true);
-    api.clients.addNew({ name, phone })
-      .then(result => {
-        if (result || result === 0) {
-          selectHandler(result);
-          setOpen(false);
-        }
-      })
-      .catch(e => {
-        console.log(e);
-      })
-      .finally(() => {
-        setSaving(false);
-      });
+    try {
+      const responseData = await api.clients.addNew({name, phone});
+      if (responseData && responseData.data && responseData.data.id) {
+        selectHandler(responseData.data.id)
+      }
+    }
+    catch(err) {
+      console.log(err);
+    }
+    setOpen(false);
   };
 
   return (
