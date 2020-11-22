@@ -16,24 +16,17 @@ const DeleteButton = ({ id }) => {
   const handleClose = () => setOpen(false);
   const handleOpen = () => setOpen(true);
 
-  const handleDelete = () => {
+  const handleDelete = async() => {
     setIsSaving(true);
-    api.requests.deleteById(id)
-      .then(result => {
-        if (result || result === 0) {
-          console.log(`Заявка с id=${id} - удалена!`);
-        } else {
-          console.log(`Ошибка удаления заявки с id=${id} !`);
-        }
-      })
-      .catch(e => {
-        console.log(e);
-      })
-      .finally(() => {
-        setIsSaving(false);
-        window['__FORCE_TABLE_UPDATE']();
-        handleClose();
-      });
+    const responseData = await api.requests.deleteById(id);
+    if (responseData && responseData.newLength) {
+      console.log('Заявка удалена');
+    } else {
+      console.log('Ошибка удаления заявки');
+    }
+    setIsSaving(false);
+    handleClose();
+    window['__FORCE_TABLE_UPDATE']();
   };
 
   return (

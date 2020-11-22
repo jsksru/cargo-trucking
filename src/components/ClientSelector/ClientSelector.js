@@ -37,29 +37,27 @@ const ClientSelector = ({ initID, selectHandler }) => {
   };
 
   useEffect(() => {
-    setLoading(true);
-    api.clients.getAll()
-      .then(data => {
-        if (data && data.length && data.length > 0) {
-          setItems(data);
+    (async()=>{
+      setLoading(true);
+      try {
+        const responseData = await api.clients.getAll();
+        if (responseData && responseData.length && responseData.length > 0) {
+          setItems(responseData);
           if (initID) {
-            const res = data.find(item => item.id === initID);
-            if (res) {
-              setSelectedID(res.id);
-              setSelectedName(res.name);
-              setConfirmedName(res.name);
+            const initClient = responseData.find(item => item.id === initID);
+            if (initClient) {
+              setSelectedID(initClient.id);
+              setSelectedName(initClient.name);
+              setConfirmedName(initClient.name);
             }
           }
-        } else {
-          setItems([]);
         }
-      })
-      .catch(e => {
-        console.log(e);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      }
+      catch (err) {
+        console.log(err);
+      }
+      setLoading(false);
+    })();
   }, [initID]);
 
   const widgetSelector = (id, name) => {
