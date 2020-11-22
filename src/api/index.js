@@ -1,53 +1,17 @@
-const SERVER_ADDR = 'http://localhost:8080';
+import axios from 'axios';
 
-const fetcher = async (method, url, body) => {
-  try {
-    const response = await fetch(SERVER_ADDR + url, {
-      method,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: body ? JSON.stringify(body) : null,
-    });
-    if (response && (response.status === 200 || response.status === 201)) {
-      const responseText = await response.text();
-      if (isJson(responseText)) {
-        return JSON.parse(responseText);
-      } else {
-        throw new Error({
-          message: 'Bad JSON response',
-          response: response.data,
-        });
-      }
-    } else {
-      throw new Error({
-        message: 'Bad response Status',
-        status: response.status,
-      });
-    }
-  }
-  catch (err) {
-    throw new Error(err);
-  }
-};
-
-const isJson = (json) => {
-  try {
-    JSON.parse(json);
-  }
-  catch {
-    return false;
-  }
-  return true;
-};
+const instance = axios.create({
+  baseURL: 'http://localhost:8080/',
+  timeout: 3000,
+});
 
 // Api for requests
 const requestsApi = {
 
-  getAll: async () => {
+  getAll: async (params) => {
     try {
-      const res = await fetcher('GET', '/requests');
-      if (res) return res;
+      const res = await instance.get('requests', { params });
+      if (res && res.data) return res.data;
       return null;
     }
     catch(err) {
@@ -56,8 +20,8 @@ const requestsApi = {
   },
   getOne: async (id) => {
     try {
-      const res = await fetcher('GET', '/requests/' + id);
-      if (res) return res;
+      const res = await instance.get('requests/' + id);
+      if (res && res.data) return res.data;
       return null;
     }
     catch(err) {
@@ -66,8 +30,8 @@ const requestsApi = {
   },
   addNew: async (data) => {
     try {
-      const res = await fetcher('POST', '/requests', data);
-      if (res) return res;
+      const res = await instance.post('requests', data);
+      if (res && res.data) return res.data;
       return null;
     }
     catch(err) {
@@ -76,8 +40,8 @@ const requestsApi = {
   },
   editById: async (id, data) => {
     try {
-      const res = await fetcher('PUT', '/requests/' + id, data);
-      if (res) return res;
+      const res = await instance.put('requests/' + id, data);
+      if (res && res.data) return res.data;
       return null;
     }
     catch(err) {
@@ -86,8 +50,8 @@ const requestsApi = {
   },
   deleteById: async (id) => {
     try {
-      const res = await fetcher('DELETE', '/requests/' + id);
-      if (res) return res;
+      const res = await instance.delete('requests/' + id);
+      if (res && res.data) return res.data;
       return null;
     }
     catch(err) {
@@ -103,8 +67,8 @@ const clientsApi = {
 
   getAll: async () => {
     try {
-      const res = await fetcher('GET', '/clients');
-      if (res) return res;
+      const res = await instance.get('clients');
+      if (res && res.data) return res.data;
       return null;
     }
     catch(err) {
@@ -113,8 +77,8 @@ const clientsApi = {
   },
   getOne: async (id) => {
     try {
-      const res = await fetcher('GET', '/clients/' + id);
-      if (res) return res;
+      const res = await instance.get('clients/' + id);
+      if (res && res.data) return res.data;
       return null;
     }
     catch(err) {
@@ -123,8 +87,8 @@ const clientsApi = {
   },
   addNew: async (data) => {
     try {
-      const res = await fetcher('POST', '/clients', data);
-      if (res) return res;
+      const res = await instance.post('clients', data);
+      if (res && res.data) return res.data;
       return null;
     }
     catch(err) {
@@ -133,8 +97,8 @@ const clientsApi = {
   },
   editById: async (id, data) => {
     try {
-      const res = await fetcher('PUT', '/clients/' + id, data);
-      if (res) return res;
+      const res = await instance.put('clients/' + id, data);
+      if (res && res.data) return res.data;
       return null;
     }
     catch(err) {
@@ -143,8 +107,8 @@ const clientsApi = {
   },
   deleteById: async (id) => {
     try {
-      const res = await fetcher('DELETE', '/clients/' + id);
-      if (res) return res;
+      const res = await instance.delete('clients/' + id);
+      if (res && res.data) return res.data;
       return null;
     }
     catch(err) {
@@ -160,8 +124,8 @@ const carriersApi = {
 
   getAll: async () => {
     try {
-      const res = await fetcher('GET', '/carriers');
-      if (res) return res;
+      const res = await instance.get('carriers');
+      if (res && res.data) return res.data;
       return null;
     }
     catch(err) {
@@ -170,8 +134,8 @@ const carriersApi = {
   },
   getOne: async (id) => {
     try {
-      const res = await fetcher('GET', '/carriers/' + id);
-      if (res) return res;
+      const res = await instance.get('carriers/' + id);
+      if (res && res.data) return res.data;
       return null;
     }
     catch(err) {
@@ -180,8 +144,8 @@ const carriersApi = {
   },
   addNew: async (data) => {
     try {
-      const res = await fetcher('POST', '/carriers', data);
-      if (res) return res;
+      const res = await instance.post('carriers', data);
+      if (res && res.data) return res.data;
       return null;
     }
     catch(err) {
@@ -190,8 +154,8 @@ const carriersApi = {
   },
   editById: async (id, data) => {
     try {
-      const res = await fetcher('PUT', '/carriers/' + id, data);
-      if (res) return res;
+      const res = await instance.put('carriers/' + id, data);
+      if (res && res.data) return res.data;
       return null;
     }
     catch(err) {
@@ -200,8 +164,8 @@ const carriersApi = {
   },
   deleteById: async (id) => {
     try {
-      const res = await fetcher('DELETE', '/carriers/' + id);
-      if (res) return res;
+      const res = await instance.delete('carriers/' + id);
+      if (res && res.data) return res.data;
       return null;
     }
     catch(err) {
