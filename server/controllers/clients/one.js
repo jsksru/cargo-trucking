@@ -1,13 +1,13 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-const FILE_NAME = path.resolve('server/data/','carriers.json');
+const FILE_NAME = path.resolve('server/data/','clients.json');
 
 module.exports = async(req, res) => {
   try {
-    const carriersFileData = await fs.readFile(FILE_NAME);
-    const carriers = JSON.parse(carriersFileData);
-    const request = carriers.find(item => item.id.toString() === req.params.id.toString());
+    const clientsFileData = await fs.readFile(FILE_NAME);
+    const clients = JSON.parse(clientsFileData);
+    const request = clients.find(item => item.id.toString() === req.params.id.toString());
     if (request) {
       res.status(200).json(request);
     } else {

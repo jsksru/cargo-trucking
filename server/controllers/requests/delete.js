@@ -1,7 +1,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-const FILE_NAME = path.resolve('server/data/','carriers.json');
+const FILE_NAME = path.resolve('server/data/','requests.json');
 
 module.exports = async(req, res) => {
   try {

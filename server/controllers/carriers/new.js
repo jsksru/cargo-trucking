@@ -1,7 +1,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-const FILE_NAME = path.resolve('server/data/','requests.json');
+const FILE_NAME = path.resolve('server/data/','carriers.json');
 
 module.exports = async(req, res) => {
   try {
@@ -11,7 +11,6 @@ module.exports = async(req, res) => {
     data.push({
       ...req.body,
       id: lastindex + 1,
-      datetime: new Date(),
     });
     const newLength = data.length;
     await fs.writeFile(FILE_NAME, JSON.stringify(data));
@@ -21,6 +20,7 @@ module.exports = async(req, res) => {
     });
   }
   catch(e) {
+    console.log(e);
     res.status(404).json({error: 'No data'});
   }
 };
