@@ -1,6 +1,6 @@
 export const formatDateTime = (datetime) => {
   const dt = new Date(datetime);
-  return dt.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' }) + ' ' + dt.toLocaleTimeString('ru-RU', { hour: 'numeric', minute: '2-digit' });
+  return dt.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' }) + ' ' + dt.toLocaleTimeString('ru-RU', { hour: 'numeric', minute: '2-digit' });
 };
 
 export const formatDateTimeFull = (datetime) => {
