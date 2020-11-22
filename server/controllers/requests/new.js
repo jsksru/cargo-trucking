@@ -7,7 +7,10 @@ module.exports = async(req, res) => {
   try {
     const fileData = await fs.readFile(FILE_NAME);
     const data = JSON.parse(fileData);
-    const lastindex = data[data.length - 1].id;
+    let lastindex = 0;
+    if (data && data.length > 0) {
+      lastindex = data[data.length - 1].id;
+    }
     data.push({
       ...req.body,
       id: lastindex + 1,
