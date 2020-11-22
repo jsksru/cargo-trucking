@@ -13,6 +13,8 @@ import IconButton from '@material-ui/core/IconButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteButton from '../DeleteButton';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import Loader from '../Loader';
 import api from '../../api';
 import { formatDateTime, formatPhoneNumber } from '../../utils';
@@ -27,11 +29,19 @@ const RequestsTable = () => {
   const classes = useStyles();
   const [ loading, setLoading ] = useState(true);
   const [ requests, setRequests ] = useState([]);
+  const [ sortField, setSortField ] = useState('id');
+  const [ sortReverse, setSortReverse ] = useState(false);
+  const [ search, setSearch ] = useState('');
+  const [ searchView, setSearchView ] = useState('');
 
   const updateRequests = async() => {
     setLoading(true);
     try {
-      const dataFromServer = await api.requests.getAll();
+      const dataFromServer = await api.requests.getAll({
+        sort: sortField,
+        reverse: sortReverse,
+        search: search,
+      });
       if (dataFromServer) setRequests(dataFromServer);
     } catch (err) {
       console.log(err);
@@ -42,7 +52,7 @@ const RequestsTable = () => {
   
   useEffect(() => {
     updateRequests();
-  }, []);
+  }, [sortField, sortReverse, search]);
 
   const MyTable = () => {
     const rows = requests.map((row) => (
@@ -67,26 +77,64 @@ const RequestsTable = () => {
       </TableRow>
     ));
 
-    return requests && requests.length > 0 ? (
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="Список заявок на перевозки">
-          <TableHead>
-            <TableRow>
-              <TableCell>№</TableCell>
-              <TableCell align="left">Дата/Время</TableCell>
-              <TableCell align="left">Клиент</TableCell>
-              <TableCell align="left">Перевозчик</TableCell>
-              <TableCell align="left">Телефон перевозчика</TableCell>
-              <TableCell align="left">АТИ</TableCell>
-              <TableCell align="right">Действия</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    ): <div>Нет заявок.</div>;
+    return (
+      <>
+        <Button
+        onClick={()=>{
+        setSortField('id');
+        setSortReverse(!sortReverse);
+        }}
+        variant="contained"
+        size="small"
+      >Сортировка по id {sortReverse? '↑':'↓'}</Button>
+      <Button
+        onClick={()=>{
+        setSortField('datetime');
+        setSortReverse(!sortReverse);
+        }}
+        variant="contained"
+        size="small"
+      >Сортировка по Дате и времени {sortReverse? '↑':'↓'}</Button>
+      <TextField
+        variant="outlined"
+        label="Поиск в комментариях"
+        id="comment-search"
+        value={searchView}
+        onInput={(e)=>{
+          setSearchView(e.target.value);
+          setTimeout(()=>{
+            setSearch(searchView);
+          }, 1000);
+        }}
+      />
+      {
+        requests && requests.length > 0 ?
+          (<TableContainer component={Paper}>
+            <Table className={classes.table} aria-label="Список заявок на перевозки">
+              <TableHead>
+                <TableRow>
+                  <TableCell>№</TableCell>
+                  <TableCell align="left">Дата/Время</TableCell>
+                  <TableCell align="left">Клиент</TableCell>
+                  <TableCell align="left">Перевозчик</TableCell>
+                  <TableCell align="left">Телефон перевозчика</TableCell>
+                  <TableCell align="left">АТИ</TableCell>
+                  <TableCell align="right">Действия</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows}
+              </TableBody>
+            </Table>
+          </TableContainer>)
+          :
+          <div>Нет заявок.</div>
+      }
+    </>
+    );
+    
+    
+    
   };
 
   return loading ? <Loader /> : <MyTable/>;
