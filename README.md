@@ -68,3 +68,31 @@ npm run serve
 | comments | String      | Комментарии            |
 ### Удаление заявки по id
 #### ```DELETE: /api/requests/:id```
+
+### API базы клиентов
+#### ```GET: /api/clients```
+#### ```GET: /api/clients/:id```
+#### ```POST: /api/clients```
+#### ```PUT: /api/clients/:id```
+#### ```DELETE: /api/clients/:id```
+### API базы перевозчиков
+#### ```GET: /api/carriers```
+#### ```GET: /api/carriers/:id```
+#### ```POST: /api/carriers```
+#### ```PUT: /api/carriers/:id```
+#### ```DELETE: /api/carriers/:id```
+API базы клиентов и перевозчиков в целом похожи на API заявок  
+(массив объектов, один объект, добавить, изменить по id, удалить по id)  
+**Объект клиента:**
+| Поле     | Тип         | Описание               |
+|----------|-------------|------------------------|
+| id       | Date(String)| id                     |
+| name     | String      | имя \ название фирмы   |
+| phone    | String      | телефон                |
+**Объект перевозчика:**
+| Поле     | Тип         | Описание               |
+|----------|-------------|------------------------|
+| id       | Date(String)| id                     |
+| name     | String      | фио \ название фирмы   |
+| phone    | String      | телефон                |
+| code     | String      | код АТИ                |
