@@ -70,7 +70,7 @@ npm run serve
 #### ```DELETE: /api/requests/:id```
 
 ### API базы клиентов
-#### ```GET: /api/clients```
+`GET: /api/clients`
 #### ```GET: /api/clients/:id```
 #### ```POST: /api/clients```
 #### ```PUT: /api/clients/:id```
