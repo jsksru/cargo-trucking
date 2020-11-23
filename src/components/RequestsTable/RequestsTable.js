@@ -32,7 +32,7 @@ const RequestsTable = ({ items }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {items.map(item => <RequestRow row={item} />)}
+          {items.map(item => <RequestRow row={item} key={item.id}/>)}
         </TableBody>
       </Table>
     </TableContainer>
