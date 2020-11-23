@@ -7,10 +7,15 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import ruLocale from "date-fns/locale/ru";
 
+import store from './store';
+import { Provider } from 'react-redux';
+
 ReactDOM.render(
-  <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ruLocale}>
-    <App />
-  </MuiPickersUtilsProvider>,
+  <Provider store={store}>
+    <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ruLocale}>
+      <App />
+    </MuiPickersUtilsProvider>
+  </Provider>,
   document.getElementById('root')
 );
 
