@@ -88,7 +88,7 @@ const CarrierSelector = ({ initID, selectHandler }) => {
         <div className={classes.grow}>
           <TextField
             disabled
-            id="client-selector-outlined-disabled"
+            id="carrier-selector-outlined-disabled"
             label="Перевозчик"
             defaultValue={confirmedName? confirmedName: 'Не выбран'}
             variant="outlined"
