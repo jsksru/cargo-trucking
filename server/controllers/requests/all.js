@@ -36,7 +36,7 @@ module.exports = async(req, res) => {
       }
     }
 
-    if (req.query && req.query.search) {
+    if (req.query && req.query.search && req.query.search !== '') {
       sortedData = sortedData.filter(item => {
         return item.comments.toLowerCase().indexOf(req.query.search.toLowerCase()) !== -1;
       });
