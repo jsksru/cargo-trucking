@@ -70,17 +70,18 @@ npm run serve
 #### ```DELETE: /api/requests/:id```
 
 ### API базы клиентов
-`GET: /api/clients`
-#### ```GET: /api/clients/:id```
-#### ```POST: /api/clients```
-#### ```PUT: /api/clients/:id```
-#### ```DELETE: /api/clients/:id```
+`GET: /api/clients`  
+`GET: /api/clients/:id`  
+`POST: /api/clients`  
+`PUT: /api/clients/:id`  
+`DELETE: /api/clients/:id`  
 ### API базы перевозчиков
-#### ```GET: /api/carriers```
-#### ```GET: /api/carriers/:id```
-#### ```POST: /api/carriers```
-#### ```PUT: /api/carriers/:id```
-#### ```DELETE: /api/carriers/:id```
+`GET: /api/carriers`  
+`GET: /api/carriers/:id`  
+`POST: /api/carriers`  
+`PUT: /api/carriers/:id`  
+`DELETE: /api/carriers/:id`
+
 API базы клиентов и перевозчиков в целом похожи на API заявок  
 (массив объектов, один объект, добавить, изменить по id, удалить по id)  
 **Объект клиента:**
