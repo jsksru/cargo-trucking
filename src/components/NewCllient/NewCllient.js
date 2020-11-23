@@ -7,11 +7,11 @@ import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
 import AddIcon from '@material-ui/icons/Add';
 import api from '../../api';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 
 const NewCllient = ({ selectHandler }) => {
   const [ open, setOpen ] = useState(false);
-  const [ name, setName ] = useState('');
-  const [ phone, setPhone ] = useState('');
   const [ saving, setSaving ] = useState(false);
 
   const handleOpen = () => {
@@ -19,13 +19,11 @@ const NewCllient = ({ selectHandler }) => {
   };
   const handleClose = () => {
     setOpen(false);
-    setName('');
-    setPhone('');
   };
-  const hadleConfirm = async() => {
+  const hadleConfirm = async(values) => {
     setSaving(true);
     try {
-      const responseData = await api.clients.addNew({name, phone});
+      const responseData = await api.clients.addNew({...values});
       if (responseData && responseData.data && responseData.data.id) {
         selectHandler(responseData.data.id)
       }
@@ -36,48 +34,77 @@ const NewCllient = ({ selectHandler }) => {
     setOpen(false);
   };
 
+  const validationSchema = yup.object({
+    name: yup
+      .string('Имя \\ Фирма клиента')
+      .required('Это поле обязательное')
+      .min(3, 'Минимум 3 символа')
+      .max(50, 'Максимум 50 символов'),
+    phone: yup
+      .string('Телефон')
+      .required('Это поле обязательное')
+      .length(10, '10 цифр')
+      .matches(/\d{10}/, {excludeEmptyString: true, message: 'Только цифры (прим. 9001234567)'})
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      phone: '',
+    },
+    validationSchema,
+    onSubmit: values => hadleConfirm(values),
+  });
+
   return (
     <>
       <Button variant="outlined" color="primary" onClick={handleOpen} startIcon={<AddIcon/>}>Добавить</Button>
       {open &&
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle id="form-dialog-title">Новый клиент</DialogTitle>
-        <DialogContent>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Имя / Название фирмы *"
-              type="text"
-              fullWidth
-              value={name}
-              onInput={e => setName(e.target.value)}
-              autoComplete="false"
-            />
-            <TextField
-              margin="dense"
-              id="phone"
-              name="phone"
-              label="Контактный телефон *"
-              type="tel"
-              fullWidth
-              value={phone}
-              onInput={e => setPhone(e.target.value)}
-              autoComplete="false"
-            />
-          
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Отмена
-          </Button>
-          {
-            saving ? <Button color="primary" variant="contained" disabled={true}>Сохранение...</Button>:
-            <Button color="primary" variant="contained" disabled={!(name&&phone)} onClick={hadleConfirm}>
-              Добавить
+        <form onSubmit={formik.handleSubmit}>
+          <DialogTitle id="form-dialog-title">Новый клиент</DialogTitle>
+          <DialogContent>
+            
+              <TextField
+                autoComplete="false"
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Имя / Название фирмы *"
+                fullWidth
+                value={formik.values.name}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.name && !!formik.errors.name}
+                helperText={formik.touched.name && formik.errors.name}
+              />
+              <TextField
+                autoComplete="false"
+                margin="dense"
+                id="phone"
+                name="phone"
+                label="Контактный телефон *"
+                fullWidth
+                value={formik.values.phone}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.phone && !!formik.errors.phone}
+                helperText={formik.touched.phone && formik.errors.phone}
+              />
+
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Отмена
             </Button>
-          }
-        </DialogActions>
+            {
+              saving ? <Button color="primary" variant="contained" disabled={true}>Сохранение...</Button>:
+              <Button color="primary" variant="contained" type="submit">
+                Добавить
+              </Button>
+            }
+          </DialogActions>
+        </form>
       </Dialog>
       }
     </>
