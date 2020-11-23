@@ -5,6 +5,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
+import AddIcon from '@material-ui/icons/Add';
 import api from '../../api';
 
 const NewCllient = ({ selectHandler }) => {
@@ -36,8 +37,8 @@ const NewCllient = ({ selectHandler }) => {
   };
 
   return (
-    <div>
-      <Button variant="outlined" color="primary" onClick={handleOpen}>Добавить клиента</Button>
+    <>
+      <Button variant="outlined" color="primary" onClick={handleOpen} startIcon={<AddIcon/>}>Добавить</Button>
       {open &&
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle id="form-dialog-title">Новый клиент</DialogTitle>
@@ -79,7 +80,7 @@ const NewCllient = ({ selectHandler }) => {
         </DialogActions>
       </Dialog>
       }
-    </div>
+    </>
   );
 };
 

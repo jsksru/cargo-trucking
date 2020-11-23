@@ -38,7 +38,7 @@ const NewCarrier = ({ selectHandler }) => {
   };
 
   return (
-    <div>
+    <>
       <Button variant="outlined" color="primary" onClick={handleOpen}>Добавить перевозчика</Button>
       {open &&
       <Dialog open={open} onClose={handleClose}>
@@ -91,7 +91,7 @@ const NewCarrier = ({ selectHandler }) => {
         </DialogActions>
       </Dialog>
       }
-    </div>
+    </>
   );
 };
 
