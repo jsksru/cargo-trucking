@@ -2,11 +2,27 @@ import SelectorWidget from '../SelectorWidget';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { makeStyles } from '@material-ui/core/styles';
+import FolderIcon from '@material-ui/icons/Folder';
+import NewClient from '../NewCllient';
+
 import api from '../../api';
+
+const useStyles = makeStyles({
+  bar: {
+    display: 'flex',
+    gap: '10px',
+    flexDirection: 'row',
+  },
+  grow: {
+    flexGrow: 1,
+  }
+});
 
 const ClientSelector = ({ initID, selectHandler }) => {
   const [open, setOpen] = useState(false);
@@ -15,6 +31,7 @@ const ClientSelector = ({ initID, selectHandler }) => {
   const [selectedID, setSelectedID] = useState(initID || null);
   const [selectedName, setSelectedName] = useState(null);
   const [confirmedName, setConfirmedName] = useState(null);
+  const classes = useStyles();
 
   const confirmSelect = () => {
     selectHandler(selectedID);
@@ -68,10 +85,21 @@ const ClientSelector = ({ initID, selectHandler }) => {
   return loading ? <CircularProgress /> :
   (
     <>
-      <div>
-        Клиент: {confirmedName? confirmedName: 'Не выбран'}
+      <div className={classes.bar}>
+        <div className={classes.grow}>
+          <TextField
+            disabled
+            id="client-selector-outlined-disabled"
+            label="Клиент"
+            defaultValue={confirmedName? confirmedName: 'Не выбран'}
+            variant="outlined"
+            size="small"
+            fullWidth
+          />
+        </div>
+        <Button variant="outlined" color="primary" onClick={handleClickOpen} startIcon={<FolderIcon/>}>Выбрать из базы</Button>
+        <NewClient selectHandler={selectHandler}/>
       </div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>Выбрать фирму клиента</Button>
       {open &&
       <Dialog
         open={open}

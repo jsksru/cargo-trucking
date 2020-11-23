@@ -6,15 +6,31 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
 import api from '../../api';
+import { makeStyles } from '@material-ui/core/styles';
+import FolderIcon from '@material-ui/icons/Folder';
+import NewCarrier from '../NewCarrier';
 
-const ClientSelector = ({ initID, selectHandler }) => {
+const useStyles = makeStyles({
+  bar: {
+    display: 'flex',
+    gap: '10px',
+    flexDirection: 'row',
+  },
+  grow: {
+    flexGrow: 1,
+  }
+});
+
+const CarrierSelector = ({ initID, selectHandler }) => {
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedID, setSelectedID] = useState(initID || null);
   const [selectedName, setSelectedName] = useState(null);
   const [confirmedName, setConfirmedName] = useState(null);
+  const classes = useStyles();
 
   const confirmSelect = () => {
     selectHandler(selectedID);
@@ -68,10 +84,21 @@ const ClientSelector = ({ initID, selectHandler }) => {
   return loading ? <CircularProgress /> :
   (
     <>
-      <div>
-        Перевозчик: {confirmedName? confirmedName: 'Не выбран'}
+      <div className={classes.bar}>
+        <div className={classes.grow}>
+          <TextField
+            disabled
+            id="client-selector-outlined-disabled"
+            label="Перевозчик"
+            defaultValue={confirmedName? confirmedName: 'Не выбран'}
+            variant="outlined"
+            size="small"
+            fullWidth
+          />
+        </div>
+        <Button variant="outlined" color="primary" onClick={handleClickOpen} startIcon={<FolderIcon/>}>Выбрать из базы</Button>
+        <NewCarrier selectHandler={selectHandler}/>
       </div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>Выбрать перевозчика</Button>
       {open &&
       <Dialog
         open={open}
@@ -100,4 +127,4 @@ const ClientSelector = ({ initID, selectHandler }) => {
   );
 };
 
-export default ClientSelector;
+export default CarrierSelector;
