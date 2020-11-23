@@ -8,8 +8,6 @@ import TextField from '@material-ui/core/TextField';
 import api from '../../api';
 import ClientSelector from '../../components/ClientSelector';
 import CarrierSelector from '../../components/CarrierSelector';
-import NewClient from '../../components/NewCllient';
-import NewCarrier from '../../components/NewCarrier';
 import TableContainer from '@material-ui/core/TableContainer';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -61,7 +59,6 @@ const NewRequest = () => {
                 </TableCell>
                 <TableCell>
                   <ClientSelector initID={client} selectHandler={setClient} />
-                  <NewClient selectHandler={setClient}/>
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -70,7 +67,6 @@ const NewRequest = () => {
                 </TableCell>
                 <TableCell>
                   <CarrierSelector initID={carrier} selectHandler={setCarrier} />
-                  <NewCarrier selectHandler={setCarrier}/>
                 </TableCell>
               </TableRow>
               <TableRow>
