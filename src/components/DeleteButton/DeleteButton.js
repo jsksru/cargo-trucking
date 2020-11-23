@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteRequestAsync } from '../../store/actions';
 import Button from '@material-ui/core/Button';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,26 +9,17 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import api from '../../api';
 
 const DeleteButton = ({ id }) => {
   const [open, setOpen] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
+  const isSaving = useSelector(state => state.saving);
+  const dispatch = useDispatch();
 
   const handleClose = () => setOpen(false);
   const handleOpen = () => setOpen(true);
 
-  const handleDelete = async() => {
-    setIsSaving(true);
-    const responseData = await api.requests.deleteById(id);
-    if (responseData && responseData.newLength) {
-      console.log('Заявка удалена');
-    } else {
-      console.log('Ошибка удаления заявки');
-    }
-    setIsSaving(false);
-    handleClose();
-    window['__FORCE_TABLE_UPDATE']();
+  const handleDelete = () => {
+    dispatch(deleteRequestAsync(id, handleClose));
   };
 
   return (
