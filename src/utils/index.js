@@ -9,5 +9,5 @@ export const formatDateTimeFull = (datetime) => {
 };
 
 export const formatPhoneNumber = (phone) => {
-  return phone.replace(/7(\d{3})(\d{2})(\d{2})(\d{3})/,'($1) $2-$3-$4');
+  return phone.replace(/(\d{3})(\d{2})(\d{2})(\d{3})/,'($1) $2-$3-$4');
 };
