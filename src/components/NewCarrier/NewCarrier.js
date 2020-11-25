@@ -9,6 +9,7 @@ import AddIcon from '@material-ui/icons/Add';
 import api from '../../api';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import InputMask from 'react-input-mask';
 
 const NewCarrier = ({ selectHandler }) => {
   const [ open, setOpen ] = useState(false);
@@ -43,8 +44,7 @@ const NewCarrier = ({ selectHandler }) => {
     phone: yup
       .string('Телефон')
       .required('Это поле обязательное')
-      .length(10, '10 цифр')
-      .matches(/\d{10}/, {excludeEmptyString: true, message: 'Только цифры (прим. 9001234567)'}),
+      .matches(/\+7\s\(\d{3}\)\s\d{2}\-\d{2}\-\d{3}/, {excludeEmptyString: true, message: 'Только цифры (прим. +7 (999) 99-99-999)'}),
     code: yup
       .string('Код АТИ')
       .required('Это поле обязательное')
@@ -58,7 +58,10 @@ const NewCarrier = ({ selectHandler }) => {
       code: '',
     },
     validationSchema,
-    onSubmit: values => hadleConfirm(values),
+    onSubmit: values => hadleConfirm({
+      ...values,
+      phone: values.phone.replace(/\D/g, '').replace(/^7/, ''),
+    }),
   });
 
   return (
@@ -82,19 +85,26 @@ const NewCarrier = ({ selectHandler }) => {
                 error={formik.touched.name && !!formik.errors.name}
                 helperText={formik.touched.name && formik.errors.name}
               />
-              <TextField
-                autoComplete="false"
-                margin="dense"
-                id="phone"
-                name="phone"
-                label="Контактный телефон *"
-                fullWidth
+              <InputMask
+                mask="+7 (999) 99-99-999"
+                alwaysShowMask
                 value={formik.values.phone}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={formik.touched.phone && !!formik.errors.phone}
-                helperText={formik.touched.phone && formik.errors.phone}
-              />
+              >
+                {() => (
+                  <TextField
+                    autoComplete="false"
+                    margin="dense"
+                    id="phone"
+                    name="phone"
+                    label="Контактный телефон *"
+                    fullWidth
+                    error={formik.touched.phone && !!formik.errors.phone}
+                    helperText={formik.touched.phone && formik.errors.phone}
+                  />
+                )}
+              </InputMask>
               <TextField
                 autoComplete="false"
                 margin="dense"
