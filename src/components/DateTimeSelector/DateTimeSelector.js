@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { KeyboardDateTimePicker } from "@material-ui/pickers";
 
 const DateTimeSelector = ({ initValue, handler }) => {
-  const [ selectedDate, setSelectedDate ] = useState(new Date(initValue));
+  const [ selectedDate, setSelectedDate ] = useState(initValue);
   
   const changeHandler = (value) => {
     setSelectedDate(value);

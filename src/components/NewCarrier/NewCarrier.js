@@ -44,7 +44,7 @@ const NewCarrier = ({ selectHandler }) => {
     phone: yup
       .string('Телефон')
       .required('Это поле обязательное')
-      .matches(/\+7\s\(\d{3}\)\s\d{2}\-\d{2}\-\d{3}/, {excludeEmptyString: true, message: 'Только цифры (прим. +7 (999) 99-99-999)'}),
+      .matches(/\+7\s\(\d{3}\)\s\d{2}-\d{2}-\d{3}/, {excludeEmptyString: true, message: 'Только цифры (прим. +7 (999) 99-99-999)'}),
     code: yup
       .string('Код АТИ')
       .required('Это поле обязательное')
